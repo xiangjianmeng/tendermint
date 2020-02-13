@@ -363,12 +363,15 @@ func createBlockchainReactor(config *cfg.Config,
 	blockExec *sm.BlockExecutor,
 	blockStore *store.BlockStore,
 	fastSync bool,
+	stateSync bool,
 	logger log.Logger) (bcReactor p2p.Reactor, err error) {
 
 	switch config.FastSync.Version {
 	case "v0":
-		bcReactor = bcv0.NewBlockchainReactor(state.Copy(), blockExec, blockStore, fastSync)
+		bcReactor = bcv0.NewBlockchainReactor(
+			state.Copy(), blockExec, blockStore, fastSync, stateSync)
 	case "v1":
+		// FIXME Needs to support state sync
 		bcReactor = bcv1.NewBlockchainReactor(state.Copy(), blockExec, blockStore, fastSync)
 	case "v2":
 		bcReactor = bcv2.NewBlockchainReactor(state.Copy(), blockExec, blockStore, fastSync)
@@ -380,7 +383,9 @@ func createBlockchainReactor(config *cfg.Config,
 	return bcReactor, nil
 }
 
-func createStateSyncReactor(config *cfg.Config, logger log.Logger,
+func createStateSyncReactor(
+	config *cfg.Config,
+	logger log.Logger,
 	conn proxy.AppConnSnapshot) (*statesync.Reactor, error) {
 	reactor := statesync.NewReactor(config.StateSync, conn)
 	reactor.SetLogger(logger.With("module", "statesync"))
@@ -638,6 +643,7 @@ func NewNode(config *cfg.Config,
 
 	// Decide whether to fast-sync or not
 	// We don't fast-sync when the only validator is us.
+	stateSync := config.StateSync.Enabled && !onlyValidatorIsUs(state, pubKey)
 	fastSync := config.FastSyncMode && !onlyValidatorIsUs(state, pubKey)
 
 	csMetrics, p2pMetrics, memplMetrics, smMetrics := metricsProvider(genDoc.ChainID)
@@ -662,7 +668,7 @@ func NewNode(config *cfg.Config,
 	)
 
 	// Make BlockchainReactor
-	bcReactor, err := createBlockchainReactor(config, state, blockExec, blockStore, fastSync, logger)
+	bcReactor, err := createBlockchainReactor(config, state, blockExec, blockStore, fastSync, stateSync, logger)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not create blockchain reactor")
 	}
