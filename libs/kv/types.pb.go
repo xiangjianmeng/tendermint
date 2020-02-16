@@ -81,7 +81,7 @@ func (m *Pair) GetValue() []byte {
 	return nil
 }
 
-// Define these here for compatibility but use tmlibs/common.KI64Pair.
+// Define these here for compatibility but use tmlibs/kv.KI64Pair.
 type KI64Pair struct {
 	Key                  []byte   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	Value                int64    `protobuf:"varint,2,opt,name=value,proto3" json:"value,omitempty"`
