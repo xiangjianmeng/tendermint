@@ -179,49 +179,49 @@ type isRequest_Value interface {
 }
 
 type Request_Echo struct {
-	Echo *RequestEcho `protobuf:"bytes,2,opt,name=echo,proto3,oneof"`
+	Echo *RequestEcho `protobuf:"bytes,2,opt,name=echo,proto3,oneof" json:"echo,omitempty"`
 }
 type Request_Flush struct {
-	Flush *RequestFlush `protobuf:"bytes,3,opt,name=flush,proto3,oneof"`
+	Flush *RequestFlush `protobuf:"bytes,3,opt,name=flush,proto3,oneof" json:"flush,omitempty"`
 }
 type Request_Info struct {
-	Info *RequestInfo `protobuf:"bytes,4,opt,name=info,proto3,oneof"`
+	Info *RequestInfo `protobuf:"bytes,4,opt,name=info,proto3,oneof" json:"info,omitempty"`
 }
 type Request_SetOption struct {
-	SetOption *RequestSetOption `protobuf:"bytes,5,opt,name=set_option,json=setOption,proto3,oneof"`
+	SetOption *RequestSetOption `protobuf:"bytes,5,opt,name=set_option,json=setOption,proto3,oneof" json:"set_option,omitempty"`
 }
 type Request_InitChain struct {
-	InitChain *RequestInitChain `protobuf:"bytes,6,opt,name=init_chain,json=initChain,proto3,oneof"`
+	InitChain *RequestInitChain `protobuf:"bytes,6,opt,name=init_chain,json=initChain,proto3,oneof" json:"init_chain,omitempty"`
 }
 type Request_Query struct {
-	Query *RequestQuery `protobuf:"bytes,7,opt,name=query,proto3,oneof"`
+	Query *RequestQuery `protobuf:"bytes,7,opt,name=query,proto3,oneof" json:"query,omitempty"`
 }
 type Request_BeginBlock struct {
-	BeginBlock *RequestBeginBlock `protobuf:"bytes,8,opt,name=begin_block,json=beginBlock,proto3,oneof"`
+	BeginBlock *RequestBeginBlock `protobuf:"bytes,8,opt,name=begin_block,json=beginBlock,proto3,oneof" json:"begin_block,omitempty"`
 }
 type Request_CheckTx struct {
-	CheckTx *RequestCheckTx `protobuf:"bytes,9,opt,name=check_tx,json=checkTx,proto3,oneof"`
+	CheckTx *RequestCheckTx `protobuf:"bytes,9,opt,name=check_tx,json=checkTx,proto3,oneof" json:"check_tx,omitempty"`
 }
 type Request_DeliverTx struct {
-	DeliverTx *RequestDeliverTx `protobuf:"bytes,19,opt,name=deliver_tx,json=deliverTx,proto3,oneof"`
+	DeliverTx *RequestDeliverTx `protobuf:"bytes,19,opt,name=deliver_tx,json=deliverTx,proto3,oneof" json:"deliver_tx,omitempty"`
 }
 type Request_EndBlock struct {
-	EndBlock *RequestEndBlock `protobuf:"bytes,11,opt,name=end_block,json=endBlock,proto3,oneof"`
+	EndBlock *RequestEndBlock `protobuf:"bytes,11,opt,name=end_block,json=endBlock,proto3,oneof" json:"end_block,omitempty"`
 }
 type Request_Commit struct {
-	Commit *RequestCommit `protobuf:"bytes,12,opt,name=commit,proto3,oneof"`
+	Commit *RequestCommit `protobuf:"bytes,12,opt,name=commit,proto3,oneof" json:"commit,omitempty"`
 }
 type Request_ListSnapshots struct {
-	ListSnapshots *RequestListSnapshots `protobuf:"bytes,13,opt,name=list_snapshots,json=listSnapshots,proto3,oneof"`
+	ListSnapshots *RequestListSnapshots `protobuf:"bytes,13,opt,name=list_snapshots,json=listSnapshots,proto3,oneof" json:"list_snapshots,omitempty"`
 }
 type Request_OfferSnapshot struct {
-	OfferSnapshot *RequestOfferSnapshot `protobuf:"bytes,14,opt,name=offer_snapshot,json=offerSnapshot,proto3,oneof"`
+	OfferSnapshot *RequestOfferSnapshot `protobuf:"bytes,14,opt,name=offer_snapshot,json=offerSnapshot,proto3,oneof" json:"offer_snapshot,omitempty"`
 }
 type Request_GetSnapshotChunk struct {
-	GetSnapshotChunk *RequestGetSnapshotChunk `protobuf:"bytes,15,opt,name=get_snapshot_chunk,json=getSnapshotChunk,proto3,oneof"`
+	GetSnapshotChunk *RequestGetSnapshotChunk `protobuf:"bytes,15,opt,name=get_snapshot_chunk,json=getSnapshotChunk,proto3,oneof" json:"get_snapshot_chunk,omitempty"`
 }
 type Request_ApplySnapshotChunk struct {
-	ApplySnapshotChunk *RequestApplySnapshotChunk `protobuf:"bytes,16,opt,name=apply_snapshot_chunk,json=applySnapshotChunk,proto3,oneof"`
+	ApplySnapshotChunk *RequestApplySnapshotChunk `protobuf:"bytes,16,opt,name=apply_snapshot_chunk,json=applySnapshotChunk,proto3,oneof" json:"apply_snapshot_chunk,omitempty"`
 }
 
 func (*Request_Echo) isRequest_Value()               {}
@@ -1260,52 +1260,52 @@ type isResponse_Value interface {
 }
 
 type Response_Exception struct {
-	Exception *ResponseException `protobuf:"bytes,1,opt,name=exception,proto3,oneof"`
+	Exception *ResponseException `protobuf:"bytes,1,opt,name=exception,proto3,oneof" json:"exception,omitempty"`
 }
 type Response_Echo struct {
-	Echo *ResponseEcho `protobuf:"bytes,2,opt,name=echo,proto3,oneof"`
+	Echo *ResponseEcho `protobuf:"bytes,2,opt,name=echo,proto3,oneof" json:"echo,omitempty"`
 }
 type Response_Flush struct {
-	Flush *ResponseFlush `protobuf:"bytes,3,opt,name=flush,proto3,oneof"`
+	Flush *ResponseFlush `protobuf:"bytes,3,opt,name=flush,proto3,oneof" json:"flush,omitempty"`
 }
 type Response_Info struct {
-	Info *ResponseInfo `protobuf:"bytes,4,opt,name=info,proto3,oneof"`
+	Info *ResponseInfo `protobuf:"bytes,4,opt,name=info,proto3,oneof" json:"info,omitempty"`
 }
 type Response_SetOption struct {
-	SetOption *ResponseSetOption `protobuf:"bytes,5,opt,name=set_option,json=setOption,proto3,oneof"`
+	SetOption *ResponseSetOption `protobuf:"bytes,5,opt,name=set_option,json=setOption,proto3,oneof" json:"set_option,omitempty"`
 }
 type Response_InitChain struct {
-	InitChain *ResponseInitChain `protobuf:"bytes,6,opt,name=init_chain,json=initChain,proto3,oneof"`
+	InitChain *ResponseInitChain `protobuf:"bytes,6,opt,name=init_chain,json=initChain,proto3,oneof" json:"init_chain,omitempty"`
 }
 type Response_Query struct {
-	Query *ResponseQuery `protobuf:"bytes,7,opt,name=query,proto3,oneof"`
+	Query *ResponseQuery `protobuf:"bytes,7,opt,name=query,proto3,oneof" json:"query,omitempty"`
 }
 type Response_BeginBlock struct {
-	BeginBlock *ResponseBeginBlock `protobuf:"bytes,8,opt,name=begin_block,json=beginBlock,proto3,oneof"`
+	BeginBlock *ResponseBeginBlock `protobuf:"bytes,8,opt,name=begin_block,json=beginBlock,proto3,oneof" json:"begin_block,omitempty"`
 }
 type Response_CheckTx struct {
-	CheckTx *ResponseCheckTx `protobuf:"bytes,9,opt,name=check_tx,json=checkTx,proto3,oneof"`
+	CheckTx *ResponseCheckTx `protobuf:"bytes,9,opt,name=check_tx,json=checkTx,proto3,oneof" json:"check_tx,omitempty"`
 }
 type Response_DeliverTx struct {
-	DeliverTx *ResponseDeliverTx `protobuf:"bytes,10,opt,name=deliver_tx,json=deliverTx,proto3,oneof"`
+	DeliverTx *ResponseDeliverTx `protobuf:"bytes,10,opt,name=deliver_tx,json=deliverTx,proto3,oneof" json:"deliver_tx,omitempty"`
 }
 type Response_EndBlock struct {
-	EndBlock *ResponseEndBlock `protobuf:"bytes,11,opt,name=end_block,json=endBlock,proto3,oneof"`
+	EndBlock *ResponseEndBlock `protobuf:"bytes,11,opt,name=end_block,json=endBlock,proto3,oneof" json:"end_block,omitempty"`
 }
 type Response_Commit struct {
-	Commit *ResponseCommit `protobuf:"bytes,12,opt,name=commit,proto3,oneof"`
+	Commit *ResponseCommit `protobuf:"bytes,12,opt,name=commit,proto3,oneof" json:"commit,omitempty"`
 }
 type Response_ListSnapshots struct {
-	ListSnapshots *ResponseListSnapshots `protobuf:"bytes,13,opt,name=list_snapshots,json=listSnapshots,proto3,oneof"`
+	ListSnapshots *ResponseListSnapshots `protobuf:"bytes,13,opt,name=list_snapshots,json=listSnapshots,proto3,oneof" json:"list_snapshots,omitempty"`
 }
 type Response_OfferSnapshot struct {
-	OfferSnapshot *ResponseOfferSnapshot `protobuf:"bytes,14,opt,name=offer_snapshot,json=offerSnapshot,proto3,oneof"`
+	OfferSnapshot *ResponseOfferSnapshot `protobuf:"bytes,14,opt,name=offer_snapshot,json=offerSnapshot,proto3,oneof" json:"offer_snapshot,omitempty"`
 }
 type Response_GetSnapshotChunk struct {
-	GetSnapshotChunk *ResponseGetSnapshotChunk `protobuf:"bytes,15,opt,name=get_snapshot_chunk,json=getSnapshotChunk,proto3,oneof"`
+	GetSnapshotChunk *ResponseGetSnapshotChunk `protobuf:"bytes,15,opt,name=get_snapshot_chunk,json=getSnapshotChunk,proto3,oneof" json:"get_snapshot_chunk,omitempty"`
 }
 type Response_ApplySnapshotChunk struct {
-	ApplySnapshotChunk *ResponseApplySnapshotChunk `protobuf:"bytes,16,opt,name=apply_snapshot_chunk,json=applySnapshotChunk,proto3,oneof"`
+	ApplySnapshotChunk *ResponseApplySnapshotChunk `protobuf:"bytes,16,opt,name=apply_snapshot_chunk,json=applySnapshotChunk,proto3,oneof" json:"apply_snapshot_chunk,omitempty"`
 }
 
 func (*Response_Exception) isResponse_Value()          {}
@@ -6922,7 +6922,8 @@ func (m *Request) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Request_Echo) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_Echo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6942,7 +6943,8 @@ func (m *Request_Echo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_Flush) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_Flush) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6962,7 +6964,8 @@ func (m *Request_Flush) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_Info) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_Info) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6982,7 +6985,8 @@ func (m *Request_Info) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_SetOption) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_SetOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7002,7 +7006,8 @@ func (m *Request_SetOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_InitChain) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_InitChain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7022,7 +7027,8 @@ func (m *Request_InitChain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_Query) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_Query) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7042,7 +7048,8 @@ func (m *Request_Query) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_BeginBlock) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_BeginBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7062,7 +7069,8 @@ func (m *Request_BeginBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_CheckTx) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_CheckTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7082,7 +7090,8 @@ func (m *Request_CheckTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_EndBlock) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_EndBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7102,7 +7111,8 @@ func (m *Request_EndBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_Commit) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_Commit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7122,7 +7132,8 @@ func (m *Request_Commit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_ListSnapshots) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_ListSnapshots) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7142,7 +7153,8 @@ func (m *Request_ListSnapshots) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_OfferSnapshot) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_OfferSnapshot) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7162,7 +7174,8 @@ func (m *Request_OfferSnapshot) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Request_GetSnapshotChunk) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_GetSnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7182,7 +7195,8 @@ func (m *Request_GetSnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *Request_ApplySnapshotChunk) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_ApplySnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7204,7 +7218,8 @@ func (m *Request_ApplySnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *Request_DeliverTx) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Request_DeliverTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7893,7 +7908,8 @@ func (m *Response) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Response_Exception) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Exception) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7913,7 +7929,8 @@ func (m *Response_Exception) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_Echo) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Echo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7933,7 +7950,8 @@ func (m *Response_Echo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_Flush) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Flush) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7953,7 +7971,8 @@ func (m *Response_Flush) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_Info) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Info) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7973,7 +7992,8 @@ func (m *Response_Info) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_SetOption) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_SetOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7993,7 +8013,8 @@ func (m *Response_SetOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_InitChain) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_InitChain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8013,7 +8034,8 @@ func (m *Response_InitChain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_Query) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Query) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8033,7 +8055,8 @@ func (m *Response_Query) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_BeginBlock) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_BeginBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8053,7 +8076,8 @@ func (m *Response_BeginBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_CheckTx) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_CheckTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8073,7 +8097,8 @@ func (m *Response_CheckTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_DeliverTx) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_DeliverTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8093,7 +8118,8 @@ func (m *Response_DeliverTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_EndBlock) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_EndBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8113,7 +8139,8 @@ func (m *Response_EndBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_Commit) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_Commit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8133,7 +8160,8 @@ func (m *Response_Commit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Response_ListSnapshots) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_ListSnapshots) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8153,7 +8181,8 @@ func (m *Response_ListSnapshots) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *Response_OfferSnapshot) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_OfferSnapshot) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8173,7 +8202,8 @@ func (m *Response_OfferSnapshot) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *Response_GetSnapshotChunk) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_GetSnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8193,7 +8223,8 @@ func (m *Response_GetSnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *Response_ApplySnapshotChunk) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Response_ApplySnapshotChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -20009,6 +20040,7 @@ func (m *SnapshotChunk) Unmarshal(dAtA []byte) error {
 func skipTypes(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -20040,10 +20072,8 @@ func skipTypes(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -20064,55 +20094,30 @@ func skipTypes(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthTypes
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthTypes
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowTypes
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipTypes(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthTypes
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupTypes
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthTypes
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthTypes = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowTypes   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthTypes        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowTypes          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupTypes = fmt.Errorf("proto: unexpected end of group")
 )
