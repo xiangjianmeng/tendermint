@@ -130,13 +130,9 @@ func (ssR *Reactor) StartLightClient() error {
 		primary,
 		[]provider.Provider{w1, w2},
 		litedb.New(db.NewMemDB(), ""),
-		lite.UpdatePeriod(0),
+		//lite.UpdatePeriod(0),
 		lite.Logger(ssR.Logger),
 	)
-	if err != nil {
-		return err
-	}
-	err = lc.Start()
 	if err != nil {
 		return err
 	}
@@ -147,11 +143,7 @@ func (ssR *Reactor) StartLightClient() error {
 // SwitchToFastSync switches to fast sync
 func (ssR *Reactor) SwitchToFastSync(state *sm.State) {
 	ssR.enabled = false
-	if ssR.lightClient != nil {
-		ssR.Logger.Info("Stopping light client")
-		ssR.lightClient.Stop()
-		ssR.lightClient = nil
-	}
+	ssR.lightClient = nil
 	if bcR, ok := ssR.Switch.Reactor("BLOCKCHAIN").(*bcRv0.BlockchainReactor); ok {
 		ssR.Logger.Info("Switching to fast sync")
 		err := bcR.StartSync(state)
@@ -350,29 +342,29 @@ func (ssR *Reactor) Receive(chID byte, src p2p.Peer, msgBytes []byte) {
 				// The header we fetch is at Snapshot.Height + 1
 				nextHeader := ssR.header
 
-				curHeader, err := ssR.lightClient.TrustedHeader(ssR.header.Height-1, time.Now().UTC())
+				curHeader, err := ssR.lightClient.TrustedHeader(ssR.header.Height-1)
 				if err != nil {
 					ssR.Logger.Error("Failed to fetch cur commit header", "err", err.Error())
 					return
 				}
 
-				prevHeader, err := ssR.lightClient.TrustedHeader(ssR.header.Height-2, time.Now().UTC())
+				prevHeader, err := ssR.lightClient.TrustedHeader(ssR.header.Height-2)
 				if err != nil {
 					ssR.Logger.Error("Failed to fetch prev commit header", "err", err.Error())
 					return
 				}
 
-				nextValidators, err := ssR.lightClient.TrustedValidatorSet(nextHeader.Height, time.Now().UTC())
+				nextValidators, _, err := ssR.lightClient.TrustedValidatorSet(nextHeader.Height)
 				if err != nil {
 					ssR.Logger.Error("Failed to fetch next validator set", "err", err.Error())
 				}
 
-				curValidators, err := ssR.lightClient.TrustedValidatorSet(curHeader.Height, time.Now().UTC())
+				curValidators, _, err := ssR.lightClient.TrustedValidatorSet(curHeader.Height)
 				if err != nil {
 					ssR.Logger.Error("Failed to fetch cur validator set", "err", err.Error())
 				}
 
-				prevValidators, err := ssR.lightClient.TrustedValidatorSet(prevHeader.Height, time.Now().UTC())
+				prevValidators, _, err := ssR.lightClient.TrustedValidatorSet(prevHeader.Height)
 				if err != nil {
 					ssR.Logger.Error("Failed to fetch prev validator set", "err", err.Error())
 				}
