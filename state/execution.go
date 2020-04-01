@@ -1,6 +1,7 @@
 package state
 
 import (
+	"bytes"
 	"fmt"
 	"time"
 
@@ -113,6 +114,13 @@ func (blockExec *BlockExecutor) CreateProposalBlock(
 // Validation does not mutate state, but does require historical information from the stateDB,
 // ie. to verify evidence from a validator at an old height.
 func (blockExec *BlockExecutor) ValidateBlock(state State, block *types.Block) error {
+	maxTxNumPerBlock := blockExec.mempool.GetMaxTxNumPerBlock()
+	if len(block.Data.Txs) > maxTxNumPerBlock {
+		return fmt.Errorf("Wrong Block.Data.Txs Number. MaxTxNumPerBlock %v, got %v",
+			maxTxNumPerBlock,
+			len(block.Data.Txs),
+		)
+	}
 	return validateBlock(blockExec.evpool, blockExec.db, state, block)
 }
 
@@ -183,6 +191,7 @@ func (blockExec *BlockExecutor) ApplyBlock(state State, blockID types.BlockID, b
 	// NOTE: if we crash between Commit and Save, events wont be fired during replay
 	fireEvents(blockExec.logger, blockExec.eventBus, block, abciResponses, validatorUpdates)
 
+	blockExec.backupState(state)
 	return state, nil
 }
 
@@ -301,6 +310,14 @@ func execBlockOnProxyApp(
 	if err != nil {
 		logger.Error("Error in proxyAppConn.EndBlock", "err", err)
 		return nil, err
+	}
+
+	// todo: cm36
+	// check how to use Events
+	for _, event := range abciResponses.EndBlock.Events {
+		if bytes.Equal([]byte(event.Type), []byte(UpgradeFailureTagKey)) {
+			return nil, fmt.Errorf(string(event.Attributes[0].Value))
+		}
 	}
 
 	logger.Info("Executed block", "height", block.Height, "validTxs", validTxs, "invalidTxs", invalidTxs)

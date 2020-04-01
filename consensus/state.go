@@ -187,6 +187,7 @@ func NewState(
 
 // SetLogger implements Service.
 func (cs *State) SetLogger(l log.Logger) {
+	g_consensusTracker.l = l.With("module","OKTracker")
 	cs.BaseService.Logger = l
 	cs.timeoutTicker.SetLogger(l)
 }
@@ -486,7 +487,7 @@ func (cs *State) sendInternalMessage(mi msgInfo) {
 // Reconstruct LastCommit from SeenCommit, which we saved along with the block,
 // (which happens even before saving the state)
 func (cs *State) reconstructLastCommit(state sm.State) {
-	if state.LastBlockHeight == 0 {
+	if state.LastBlockHeight == types.GetStartBlockHeight() {
 		return
 	}
 	seenCommit := cs.blockStore.LoadSeenCommit(state.LastBlockHeight)
@@ -822,6 +823,7 @@ func (cs *State) enterNewRound(height int64, round int) {
 		return
 	}
 
+	g_consensusTracker.set(height,cstypes.RoundStepNewRound,true)
 	if now := tmtime.Now(); cs.StartTime.After(now) {
 		logger.Info("Need to set a buffer and log message here for sanity.", "startTime", cs.StartTime, "now", now)
 	}
@@ -873,7 +875,7 @@ func (cs *State) enterNewRound(height int64, round int) {
 // needProofBlock returns true on the first height (so the genesis app hash is signed right away)
 // and where the last block (height-1) caused the app hash to change
 func (cs *State) needProofBlock(height int64) bool {
-	if height == 1 {
+	if height == types.GetStartBlockHeight() + 1 {
 		return true
 	}
 
@@ -900,6 +902,9 @@ func (cs *State) enterPropose(height int64, round int) {
 	}
 	logger.Info(fmt.Sprintf("enterPropose(%v/%v). Current: %v/%v/%v", height, round, cs.Height, cs.Round, cs.Step))
 
+	g_consensusTracker.set(height,cstypes.RoundStepNewRound,false)
+	cs.calcProcessingTime(height, cstypes.RoundStepNewRound)
+	g_consensusTracker.set(height,cstypes.RoundStepPropose,true)
 	defer func() {
 		// Done enterPropose:
 		cs.updateRoundStep(round, cstypes.RoundStepPropose)
@@ -930,19 +935,14 @@ func (cs *State) enterPropose(height int64, round int) {
 	}
 	logger.Debug("This node is a validator")
 
+	g_consensusTracker.setBlockPeer(height,cs.Validators.GetProposer().Address.String())
 	if cs.isProposer(address) {
-		logger.Info("enterPropose: Our turn to propose",
-			"proposer",
-			cs.Validators.GetProposer().Address,
-			"privValidator",
-			cs.privValidator)
+		g_consensusTracker.setIsOurTurn(height,true)
+		logger.Info("enterPropose: Our turn to propose", "proposer", cs.Validators.GetProposer().Address, "privValidator", cs.privValidator)
 		cs.decideProposal(height, round)
 	} else {
-		logger.Info("enterPropose: Not our turn to propose",
-			"proposer",
-			cs.Validators.GetProposer().Address,
-			"privValidator",
-			cs.privValidator)
+		g_consensusTracker.setIsOurTurn(height,false)
+		logger.Info("enterPropose: Not our turn to propose", "proposer", cs.Validators.GetProposer().Address, "privValidator", cs.privValidator)
 	}
 }
 
@@ -1012,7 +1012,7 @@ func (cs *State) isProposalComplete() bool {
 func (cs *State) createProposalBlock() (block *types.Block, blockParts *types.PartSet) {
 	var commit *types.Commit
 	switch {
-	case cs.Height == 1:
+	case cs.Height == types.GetStartBlockHeight() + 1:
 		// We're creating a proposal for the first block.
 		// The commit is empty, but not nil.
 		commit = types.NewCommit(0, 0, types.BlockID{}, nil)
@@ -1045,6 +1045,10 @@ func (cs *State) enterPrevote(height int64, round int) {
 		return
 	}
 
+	g_consensusTracker.set(height,cstypes.RoundStepPropose,false)
+	cs.calcProcessingTime(height, cstypes.RoundStepPropose)
+	
+	g_consensusTracker.set(height,cstypes.RoundStepPrevote,true)
 	defer func() {
 		// Done enterPrevote:
 		cs.updateRoundStep(round, cstypes.RoundStepPrevote)
@@ -1107,6 +1111,7 @@ func (cs *State) enterPrevoteWait(height int64, round int) {
 			cs.Step))
 		return
 	}
+	g_consensusTracker.set(height,cstypes.RoundStepPrevoteWait,true)
 	if !cs.Votes.Prevotes(round).HasTwoThirdsAny() {
 		panic(fmt.Sprintf("enterPrevoteWait(%v/%v), but Prevotes does not have any +2/3 votes", height, round))
 	}
@@ -1144,6 +1149,10 @@ func (cs *State) enterPrecommit(height int64, round int) {
 
 	logger.Info(fmt.Sprintf("enterPrecommit(%v/%v). Current: %v/%v/%v", height, round, cs.Height, cs.Round, cs.Step))
 
+	g_consensusTracker.set(height,cstypes.RoundStepPrevote,false)
+	cs.calcProcessingTime(height, cstypes.RoundStepPrevote)
+
+	g_consensusTracker.set(height,cstypes.RoundStepPrecommit,true)
 	defer func() {
 		// Done enterPrecommit:
 		cs.updateRoundStep(round, cstypes.RoundStepPrecommit)
@@ -1241,6 +1250,7 @@ func (cs *State) enterPrecommitWait(height int64, round int) {
 				height, round, cs.Height, cs.Round, cs.TriggeredTimeoutPrecommit))
 		return
 	}
+	g_consensusTracker.set(height,cstypes.RoundStepPrecommitWait,true)
 	if !cs.Votes.Precommits(round).HasTwoThirdsAny() {
 		panic(fmt.Sprintf("enterPrecommitWait(%v/%v), but Precommits does not have any +2/3 votes", height, round))
 	}
@@ -1273,6 +1283,10 @@ func (cs *State) enterCommit(height int64, commitRound int) {
 	}
 	logger.Info(fmt.Sprintf("enterCommit(%v/%v). Current: %v/%v/%v", height, commitRound, cs.Height, cs.Round, cs.Step))
 
+	g_consensusTracker.set(height,cstypes.RoundStepPrecommit,false)
+	cs.calcProcessingTime(height, cstypes.RoundStepPrecommit)
+
+	g_consensusTracker.set(height,cstypes.RoundStepCommit,true)
 	defer func() {
 		// Done enterCommit:
 		// keep cs.Round the same, commitRound points to the right Precommits set.
@@ -1427,6 +1441,12 @@ func (cs *State) finalizeCommit(height int64) {
 
 	// Execute and commit the block, update and save the state, and update the mempool.
 	// NOTE The block.AppHash wont reflect these txs until the next block.
+
+	g_consensusTracker.set(height,cstypes.RoundStepCommit,false)
+	cs.calcProcessingTime(height, cstypes.RoundStepCommit)
+
+	g_consensusTracker.Display(height)
+
 	var err error
 	stateCopy, err = cs.blockExec.ApplyBlock(
 		stateCopy,
@@ -1516,7 +1536,7 @@ func (cs *State) recordMetrics(height int64, block *types.Block) {
 	}
 	cs.metrics.ByzantineValidatorsPower.Set(float64(byzantineValidatorsPower))
 
-	if height > 1 {
+	if height > types.GetStartBlockHeight() + 1 {
 		lastBlockMeta := cs.blockStore.LoadBlockMeta(height - 1)
 		cs.metrics.BlockIntervalSeconds.Set(
 			block.Time.Sub(lastBlockMeta.Header.Time).Seconds(),
@@ -1743,6 +1763,7 @@ func (cs *State) addVote(
 	case types.PrevoteType:
 		prevotes := cs.Votes.Prevotes(vote.Round)
 		cs.Logger.Info("Added to prevote", "vote", vote, "prevotes", prevotes.StringShort())
+		g_consensusTracker.IncCount(height,0,vote.ValidatorAddress.String())
 
 		// If +2/3 prevotes for a block or nil for *any* round:
 		if blockID, ok := prevotes.TwoThirdsMajority(); ok {
@@ -1813,6 +1834,7 @@ func (cs *State) addVote(
 		precommits := cs.Votes.Precommits(vote.Round)
 		cs.Logger.Info("Added to precommit", "vote", vote, "precommits", precommits.StringShort())
 
+		g_consensusTracker.IncCount(height,1,vote.ValidatorAddress.String())
 		blockID, ok := precommits.TwoThirdsMajority()
 		if ok {
 			// Executed as TwoThirdsMajority could be from a higher round

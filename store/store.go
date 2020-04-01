@@ -44,6 +44,13 @@ func NewBlockStore(db dbm.DB) *BlockStore {
 	}
 }
 
+func NewRecoverStore(db dbm.DB, height int64) *BlockStore {
+	return &BlockStore{
+		height: height,
+		db:     db,
+	}
+}
+
 // Height returns the last known contiguous block height.
 func (bs *BlockStore) Height() int64 {
 	bs.mtx.RLock()
@@ -282,13 +289,16 @@ func LoadBlockStoreStateJSON(db dbm.DB) BlockStoreStateJSON {
 	}
 	if len(bytes) == 0 {
 		return BlockStoreStateJSON{
-			Height: 0,
+			Height: types.GetStartBlockHeight(),
 		}
 	}
 	bsj := BlockStoreStateJSON{}
 	err = cdc.UnmarshalJSON(bytes, &bsj)
 	if err != nil {
 		panic(fmt.Sprintf("Could not unmarshal bytes: %X", bytes))
+	}
+	if recoverHeight := viper.GetInt64("recover"); recoverHeight != 0 {
+		bsj.Height = recoverHeight
 	}
 	return bsj
 }

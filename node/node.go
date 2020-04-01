@@ -48,6 +48,9 @@ import (
 	dbm "github.com/tendermint/tm-db"
 )
 
+const (
+	FlagRollback = "rollback"
+)
 //------------------------------------------------------------------------------
 
 // DBContext specifies config information for loading a new DB.
@@ -323,6 +326,7 @@ func createMempoolAndMempoolReactor(config *cfg.Config, proxyApp proxy.AppConns,
 	mempool := mempl.NewCListMempool(
 		config.Mempool,
 		proxyApp.Mempool(),
+		proxyApp.Query(),
 		state.LastBlockHeight,
 		mempl.WithMetrics(memplMetrics),
 		mempl.WithPreCheck(sm.TxPreCheck(state)),
@@ -645,6 +649,13 @@ func NewNode(config *cfg.Config,
 		evidencePool,
 		sm.BlockExecutorWithMetrics(smMetrics),
 	)
+
+
+	initRecover(blockStore,
+		state ,
+		config ,
+		blockExec,
+		logger)
 
 	// Make BlockchainReactor
 	bcReactor, err := createBlockchainReactor(config, state, blockExec, blockStore, fastSync, logger)

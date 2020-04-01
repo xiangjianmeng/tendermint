@@ -96,7 +96,7 @@ func validateBlock(evidencePool EvidencePool, stateDB dbm.DB, state State, block
 	}
 
 	// Validate block Time
-	if block.Height > 1 {
+	if block.Height > types.GetStartBlockHeight() + 1 {
 		if !block.Time.After(state.LastBlockTime) {
 			return fmt.Errorf("block time %v not greater than last block time %v",
 				block.Time,
@@ -111,7 +111,7 @@ func validateBlock(evidencePool EvidencePool, stateDB dbm.DB, state State, block
 				block.Time,
 			)
 		}
-	} else if block.Height == 1 {
+	} else if block.Height == types.GetStartBlockHeight() + 1 {
 		genesisTime := state.LastBlockTime
 		if !block.Time.Equal(genesisTime) {
 			return fmt.Errorf("block time %v is not equal to genesis time %v",

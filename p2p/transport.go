@@ -16,6 +16,7 @@ const (
 	defaultDialTimeout      = time.Second
 	defaultFilterTimeout    = 5 * time.Second
 	defaultHandshakeTimeout = 3 * time.Second
+	disableConnectionFilter = "true"
 )
 
 // IPResolver is a behaviour subset of net.Resolver.
@@ -331,6 +332,10 @@ func (mt *MultiplexTransport) cleanup(c net.Conn) error {
 }
 
 func (mt *MultiplexTransport) filterConn(c net.Conn) (err error) {
+	if disableConnectionFilter == "true" {
+		return nil // okchain: do not filter for testnet
+	}
+
 	defer func() {
 		if err != nil {
 			_ = c.Close()
