@@ -22,7 +22,7 @@ require (
 	github.com/gtank/merlin v0.1.1
 	github.com/hdevalence/ed25519consensus v0.0.0-20201207055737-7fde80a9d5ff
 	github.com/libp2p/go-buffer-pool v0.0.2
-	github.com/minio/highwayhash v1.0.1
+	github.com/minio/highwayhash v1.0.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.9.0
 	github.com/rcrowley/go-metrics v0.0.0-20200313005456-10cdbea86bc0
